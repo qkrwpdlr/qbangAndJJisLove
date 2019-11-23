@@ -2,7 +2,8 @@
   <v-container>
     <v-expansion-panels accordion>
         <template v-for="(data,i) in datas">
-          <money-element :value="data" :key="i"/>
+          <money-element :value="data" :key="i" v-if="!admin"/>
+          <admin-money :value="data" :key="i" v-if="admin"/>
         </template>
     </v-expansion-panels>
     </v-container>
@@ -10,6 +11,7 @@
 
 <script>
 import moneyElement from "~/components/moneyElement";
+import adminMoney from "~/components/adminMoney";
 export default {
   async asyncData({ $axios }) {
     let res = await $axios.get("/allData");
@@ -18,10 +20,18 @@ export default {
     };
   },
   components: {
-    moneyElement
+    moneyElement,
+    adminMoney
+  },
+  mounted() {
+    if (localStorage.getItem("admin") == "admin") {
+      this.admin = true;
+    } else {
+    }
   },
   data: function() {
     return {
+      admin: false,
       datas: [
         {
           date: "2019.01.02",
