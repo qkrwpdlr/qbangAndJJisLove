@@ -17,7 +17,8 @@ module.exports = {
     }
   },
   axios: {
-    baseURL: "http://localhost:8080"
+    baseURL: "https://sujecookie.xyz/api",
+    // baseURL: "http://localhost:8080"
   },
   // pwa: {
   //   manifest: {
