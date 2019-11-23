@@ -1,3 +1,5 @@
+import TerserPlugin from 'terser-webpack-plugin'
+
 module.exports = {
   modules: [
     '@nuxtjs/onesignal',
@@ -53,6 +55,15 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: false
+        })
+      ]
+    },
     /*
     ** Run ESLint on save
     */
