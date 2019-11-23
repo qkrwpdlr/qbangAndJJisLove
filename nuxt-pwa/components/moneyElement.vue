@@ -10,9 +10,9 @@
                     indeterminate
                     color="amber" />
                 </v-btn>
-                <span class="money-element--root-date">{{value.date}}</span>
+                <span class="money-element--root-date">{{value.kind}}</span>
                 <span class="money-element--root-title">{{value.clientSell}}</span>
-                <span class="money-element--root-price">{{value.inOutMoney}}원</span>
+                <span class="money-element--root-price">{{value.inOutMoney}} 원</span>
             </div>
             <v-expansion-panel-header></v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -39,10 +39,10 @@ export default {
   },
   computed: {
     cause: function() {
-      if (this.value.cause == null) {
+      if (this.value.content == null) {
         return "아직 사유작성을 하지 않았습니다";
       } else {
-        return this.value.cause;
+        return this.value.content;
       }
     }
   },
@@ -59,7 +59,7 @@ export default {
   methods: {
     clickValid: async function() {
       if (this.isFirst == false) {
-        window.open(`https://baobab.scope.klaytn.com/tx/${this.value.hash_1}`)
+        window.open(`https://baobab.scope.klaytn.com/tx/${this.value.hash_1}`);
         return;
       }
       this.isLoading = true;
@@ -120,7 +120,8 @@ export default {
 }
 .money-element--root-price {
   margin-left: 10px;
-  color: blue;
+  color: rgb(130, 130, 130);
+  font-size: 15px;
 }
 .money-element--root-icon {
   position: absolute;

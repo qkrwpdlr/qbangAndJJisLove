@@ -1,26 +1,34 @@
 <template>
   <v-container>
-    <template v-for="(data,index) in datas">
+    <template v-for="(data,index) in datas" v-if="!admin">
       <money-card :value="data" :key='index' :isDoing="data.doing"/>
     </template> 
+    <admin-card v-if="admin"/>
   </v-container>
 </template>
 
 <script>
 import moneyCard from "~/components/moneyCard";
+import adminCard from "~/components/adminContract";
 export default {
   async asyncData({ $axios }) {
     let { data } = await $axios.get("/getAllTransfer");
-    console.log(data);
     return {
       datas: data
     };
   },
+  mounted() {
+    if (localStorage.getItem("admin") == "admin") {
+      this.admin = true;
+    }
+  },
   components: {
-    moneyCard
+    moneyCard,
+    adminCard
   },
   data() {
     return {
+      admin: false,
       datas: [
         {
           date: "2019.01.02",

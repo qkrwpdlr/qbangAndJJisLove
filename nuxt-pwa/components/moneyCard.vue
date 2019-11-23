@@ -18,17 +18,17 @@
         </v-card-subtitle>
         <v-card-title class="justify-space-between pb-0 pt-0">
           <span>신한</span>
-          <span>{{value.toSend}}</span>
+          <span class="blue--text text--darken-2">{{value.toSend}}</span>
         </v-card-title>
         <v-card-title class="justify-space-between pb-0 pt-0">
           <span>금액</span>
-          <span class="">{{value.money}} 원</span>
+          <span class="blue--text text--darken-2">{{value.money}} 원</span>
         </v-card-title>
         <v-card-title>
           <span>거래목적</span>
         </v-card-title>
 
-        <v-card-subtitle>
+        <v-card-subtitle class="text-font--size---15">
             {{value.purpose}}
         </v-card-subtitle>
 
@@ -36,9 +36,9 @@
             <v-btn small class="mr-3" color="red" dark @click="noClick" >반대</v-btn>
             <v-btn small primary class="ml-3" color="blue" dark @click="yesClick" >찬성</v-btn>
         </v-card-actions>
-        <v-card-title class="justify-center blue--text" v-if="value.result == 0 && isVoted">
+        <v-card-subtitle class="text-center" v-if="value.result == 0 && isVoted">
           투표하셨습니다
-        </v-card-title>
+        </v-card-subtitle>
         <v-card-title class="justify-center blue--text" v-if="value.result == 1">
           이미 처리된 계약입니다
         </v-card-title>
@@ -146,5 +146,8 @@ export default {
   position: absolute;
   right: 18px;
   top: 10px;
+}
+.text-font--size---15 {
+  font-size: 18px;
 }
 </style>

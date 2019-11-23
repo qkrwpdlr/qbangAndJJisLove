@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="white--is--good--and--yam">
     <lottie-component v-if="!admin"/>
     <heart-component v-if="admin"/>
     <chart-component />
@@ -31,4 +31,7 @@ export default {
 </script>
 
 <style>
+.white--is--good--and--yam {
+  background-color: white;
+}
 </style>

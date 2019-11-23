@@ -1,3 +1,7 @@
 export const keyIcon = require("./key.svg")
 export const lockIcon = require("./locked.svg")
-export const unlockIcon = require("./unlock.svg") 
+export const unlockIcon = require("./unlock.svg")
+export const bankIcon = require("./bank.svg")
+export const homeIcon = require("./home.svg")
+export const listIcon = require("./list.svg")
+export const voteIcon = require("./vote.svg") 

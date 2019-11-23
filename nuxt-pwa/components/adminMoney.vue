@@ -1,20 +1,30 @@
 <template>
         <v-expansion-panel>
             <div class="money-element--root--div">
-                <v-btn icon class="money-element--root-icon" @click="writeMore">
+                <v-btn icon class="money-element--root-icon" @click="write" v-if="value.content==null">
                   <v-icon color="yellow darken-3">mdi-pencil</v-icon>          
                 </v-btn>
-                <span class="money-element--root-date">{{value.date}}</span>
+                <span class="money-element--root-date">{{value.kind}}</span>
                 <span class="money-element--root-title">{{value.clientSell}}</span>
-                <span class="money-element--root-price">{{value.inOutMoney}}원</span>
+                <span class="money-element--root-price">{{value.inOutMoney}} 원</span>
             </div>
-          <v-textarea
-          label="사용내역을 써주세요"
-          auto-grow
-          rows="2"
-          row-height="25"
-          shaped
-        ></v-textarea>
+          <template v-if="value.content==null">
+            <v-textarea
+            label="사용내역을 써주세요"
+            auto-grow
+            rows="2"
+            class="ml-2 mr-2"
+            row-height="25"
+            v-model="content"
+            shaped
+          ></v-textarea>
+        </template>
+        <template v-if="value.content!=null">
+            <v-expansion-panel-header></v-expansion-panel-header>
+            <v-expansion-panel-content>
+                {{value.content}}
+            </v-expansion-panel-content>
+        </template>
         </v-expansion-panel>
 </template>
 
@@ -45,6 +55,7 @@ export default {
   },
   data() {
     return {
+      content: "",
       isLoading: false,
       isFirst: true,
       isError: false,
@@ -54,8 +65,12 @@ export default {
     };
   },
   methods: {
-    writeMore: async function() {
-      alert(123)
+    write: async function() {
+      let { data } = await this.$axios.post("/writeReview", {
+        id: this.value.id,
+        content: this.content
+      });
+      console.log(data);
     }
   }
 };
@@ -83,7 +98,8 @@ export default {
 }
 .money-element--root-price {
   margin-left: 10px;
-  color: blue;
+  color: rgb(130, 130, 130);
+  font-size: 15px;
 }
 .money-element--root-icon {
   position: absolute;

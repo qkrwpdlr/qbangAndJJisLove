@@ -26,7 +26,7 @@ export default {
         datasets: [
           {
             data: [this.datas.rest, this.datas.cost, this.datas.donation],
-            backgroundColor: ["rgb(105,106,110)","rgb(1,75,136)","rgb(120,206,241)"]
+            backgroundColor: ["rgb(201,224,245)","rgb(148,165,181)","rgb(147,158,191)"]
           }
         ],
         labels: ["남은 기부금", "운영비", "집행금"]

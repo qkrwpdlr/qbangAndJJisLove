@@ -1,5 +1,5 @@
 <template>
-    <div class="num-chart--root-div">
+    <div class="num-chart--root-div" :style="fontStyle">
         <v-layout column align-center>
             <div class="num-chart--root-div--row-div mt-2">
                 <span>총 기부금액</span> 
@@ -20,8 +20,20 @@
 <script>
 import countSpan from "./countSpan";
 export default {
+  mounted() {
+    if (innerWidth < 640) {
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
+  },
   components: {
     countSpan
+  },
+  data() {
+    return {
+      mobile: false
+    };
   },
   props: {
     datas: {
@@ -38,6 +50,17 @@ export default {
   computed: {
     allMoney: function() {
       return this.datas.rest + this.datas.donation + this.datas.cost;
+    },
+    fontStyle: function() {
+      if (this.mobile) {
+        return {
+          fontSize: "20px"
+        };
+      } else {
+        return {
+          fontSize: "30px"
+        };
+      }
     }
   }
 };
@@ -45,7 +68,6 @@ export default {
 
 <style>
 .num-chart--root-div--row-div {
-  font-size: 30px;
   width: 350px;
   display: flex;
   justify-content: space-between;

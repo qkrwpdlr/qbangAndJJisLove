@@ -12,17 +12,18 @@
       <v-list>
         <v-list-item link @click="$router.push('/')">
           <v-list-item-icon>
-            <v-icon>mdi-home-city</v-icon>
+            <img :src="homeIcon" width="30px">
           </v-list-item-icon>
         </v-list-item>
         <v-list-item link @click="$router.push('bill')">
           <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
+            <img :src="listIcon" width="30px">
           </v-list-item-icon>
         </v-list-item>
         <v-list-item link @click="$router.push('agree')">
           <v-list-item-icon>
-            <v-icon>mdi-account-group-outline</v-icon>
+            <img :src="bankIcon" width="30px" v-if="admin">
+            <img :src="voteIcon" width="30px" v-if="!admin">
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -38,7 +39,7 @@
       <v-toolbar-title @click="changeMod">Nerly</v-toolbar-title>
     </v-app-bar>
 
-    <v-content>
+    <v-content class="root--back--div">
       <v-container fluid>
         <nuxt />
       </v-container>
@@ -57,8 +58,15 @@
 </template>
 
 <script>
+import { bankIcon, homeIcon, listIcon, voteIcon } from "~/assets/icon/index.js";
 export default {
+  mounted() {
+    if (localStorage.getItem("admin") == "admin") {
+      this.admin = true;
+    }
+  },
   data: () => ({
+    admin: false,
     drawers: ["Default (no property)", "Permanent", "Temporary"],
     primaryDrawer: {
       model: null,
@@ -67,6 +75,10 @@ export default {
       floating: false,
       mini: true
     },
+    bankIcon,
+    homeIcon,
+    listIcon,
+    voteIcon,
     footer: {
       inset: false
     },
@@ -87,3 +99,8 @@ export default {
   }
 };
 </script>
+<style>
+.root--back--div {
+  background-color: rgb(238, 238, 238);
+}
+</style>

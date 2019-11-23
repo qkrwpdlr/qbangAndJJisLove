@@ -5,7 +5,7 @@
           :align="'center'"
           :justify="'center'"
           class="lottie-giver--root--span-div mt-6 mb-6">
-          <span>당신의 사랑이 전달중..</span>
+          <span>사랑을 전달하는 중..</span>
         </v-row>
     </div>
 </template>
@@ -16,7 +16,7 @@ import * as animationData from "~/assets/heart.json";
 
 export default {
   mounted() {
-    if (window.innerWidth < 640) {
+    if (innerWidth < 640) {
       this.lottieSize = window.innerWidth - 20;
     } else {
       this.lottieSize = 650;

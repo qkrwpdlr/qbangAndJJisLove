@@ -5,7 +5,7 @@
           :align="'center'"
           :justify="'center'"
           class="lottie-giver--root--span-div mt-6 mb-6">
-          <span>당신의 사랑이 전달중..</span>
+          <span>{{memo}}{{pot}}</span>
         </v-row>
     </div>
 </template>
@@ -15,13 +15,21 @@ import Lottie from "./index";
 import * as animationData from "~/assets/test.json";
 
 export default {
-  mounted() {
+  async mounted() {
     if (window.innerWidth < 640) {
       this.lottieSize = window.innerWidth - 20;
     } else {
       this.lottieSize = 650;
     }
     this.canRender = true;
+    let index = 0;
+    for (let i = 0; i < 100; i++) {
+      await delay(1000);
+      this.pot = ".";
+      for (let j = 0; j < i % 4; j++) {
+        this.pot += ".";
+      }
+    }
   },
   name: "lottieGiver",
   components: {
@@ -29,10 +37,13 @@ export default {
   },
   data() {
     return {
+      memo: "희망을 전달하는 중",
+      pot: "",
       defaultOptions: { animationData: animationData.default },
       animationSpeed: 2,
       lottieSize: 300,
-      canRender: false
+      canRender: false,
+      index: 0
     };
   },
   methods: {
@@ -57,6 +68,13 @@ export default {
     }
   }
 };
+function delay(time) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+}
 </script>
 <style>
 .lottie-giver--root--span-div span {

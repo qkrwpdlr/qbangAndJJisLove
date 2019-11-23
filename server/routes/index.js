@@ -8,6 +8,28 @@ var transferDao = require("./../model/transfer_DAO")
 const headers = {
   'Content-Type': 'application/json'
 };
+var OneSignal = require('onesignal-node');
+
+var myClient = new OneSignal.Client({
+  userAuthKey: 'YTExOWM5OWItMDZkMS00Y2FjLWFiMDgtNmU5NTQ2MWVlODhh',
+  app: { appAuthKey: 'YTExOWM5OWItMDZkMS00Y2FjLWFiMDgtNmU5NTQ2MWVlODhh', appId: '1dc91fb3-db09-4248-b48c-71285960f03f' }
+});
+var firstNotification = new OneSignal.Notification({
+  contents: {
+    en: "새로운 계좌이체가 등록되었습니다",
+    tr: "태스트"
+  }
+});
+
+firstNotification.postBody["included_segments"] = ["Active Users"];
+firstNotification.postBody["excluded_segments"] = ["Banned Users"];
+
+// set notification parameters      
+firstNotification.postBody["data"] = { "abc": "123", "foo": "bar" };
+// firstNotification.postBody["send_after"] = 'Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)';
+
+// send this notification to All Users except Inactive ones      
+
 const descryptedAccount = caver.klay.accounts.decrypt({
   "version": 3,
   "id": "67a07dd3-bda7-48f9-8c89-6e789f490c4a",
@@ -145,7 +167,13 @@ router.post("/newTransfer", function (req, res) {
         if (err) {
           res.status(400).send(err)
         } else {
-          res.status(200).send("good")
+          myClient.sendNotification(firstNotification, function (err, httpResponse, data) {
+            if (err) {
+              console.log('Something went wrong...');
+            } else {
+              res.status(200).send("good")
+            }
+          });
         }
       })
 
@@ -235,6 +263,35 @@ router.get("/getAllTransfer", function (req, res) {
     } else {
       res.send(rows)
     }
+  })
+})
+
+router.post("/writeReview", function (req, res) {
+  var sendData_str = JSON.stringify({
+    content: req.body.content
+  })
+  var encoded = caver.utils.utf8ToHex(sendData_str)
+  caver.klay.sendTransaction({
+    type: 'VALUE_TRANSFER_MEMO',
+    from: '0xd087a57b54e917a9ac98dd09451a6252603426c9',
+    to: '0xd087a57b54e917a9ac98dd09451a6252603426c9',
+    gas: '300000',
+    value: caver.utils.toPeb('1', 'KLAY'),
+    data: `${encoded}`,
+  }).then(function (rawTransaction) {
+    let hash = rawTransaction.transactionHash
+    baordDao.setWrite({
+      id: req.body.id,
+      content: req.body.content,
+      hash
+    }, function (err, row) {
+      if (err) {
+        res.status(400).send(err)
+      } else {
+        res.status(200).send(row)
+      }
+    })
+
   })
 })
 module.exports = router;
