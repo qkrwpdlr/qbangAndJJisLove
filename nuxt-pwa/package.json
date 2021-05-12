@@ -22,7 +22,7 @@
     "@nuxtjs/onesignal": "^3.0.0-beta.16",
     "@nuxtjs/pwa": "^3.0.0-beta.19",
     "caver-js": "^1.2.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "nuxt": "^2.0.0",
     "nuxt-fontawesome": "^0.4.0",
     "terser-webpack-plugin": "^2.2.1",
